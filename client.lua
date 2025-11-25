@@ -4,12 +4,16 @@ local ESX = GetResourceState('es_extended') == 'started' and exports.es_extended
 local ped = {}
 
 Citizen.CreateThread(function()
+    -- Ensure global ped model is loaded if used in loop, 
+    -- though ideally this should happen inside the loop if models differ.
+    -- based on your script structure, it loads one config.pedmodel
+    RequestModel(config.pedmodel)
+    while not HasModelLoaded(config.pedmodel) do
+        Wait(10)
+    end
+
     for k, v in pairs(config.locations) do 
         if v.ped then 
-            RequestModel(config.pedmodel)
-            while not HasModelLoaded(config.pedmodel) do
-                Wait(10)
-            end
             ped[k] = CreatePed(4, config.pedmodel, v.coords.x, v.coords.y, v.coords.z, v.coords.w, false, true)
             if config.scenario then 
                 TaskStartScenarioInPlace(ped[k], config.scenario, 0, true)
@@ -27,8 +31,8 @@ Citizen.CreateThread(function()
                     name = k,
                     heading = v.coords.w,
                     debugPoly = false,
-                    minZ = v.coords.z,
-                    maxZ = v.coords.z
+                    minZ = v.coords.z - 1.0,
+                    maxZ = v.coords.z + 1.0
                 }, {
                     options = {
                         {
@@ -103,7 +107,8 @@ RegisterNetEvent('solos-rentals:client:rentVehicle', function(k)
             for vehicle, details in pairs(info.vehicles) do 
                 table.insert(menu_options, {
                     title = vehicle:gsub("^%l", string.upper),
-                    image = details.image,
+                    -- CHANGED: details.image to details.icon to support your config
+                    icon = details.icon, 
                     description = '$' .. details.price,
                     onSelect = function()
                         TriggerServerEvent('solos-rentals:server:MoneyAmounts', vehicle, details.price, location)
