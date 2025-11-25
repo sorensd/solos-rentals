@@ -22,10 +22,25 @@ end
 RegisterNetEvent('solos-rentals:server:RentVehicle', function(vehicle, plate)
     local src = source
     local player_name = PlayerName(src)
-    exports.ox_inventory:AddItem(src, 'rentalpapers', 1, 
-        {description = 'Owner: '..player_name..' | Plate: '..plate..' | Vehicle: '..vehicle:gsub("^%l", string.upper)}
-    )
+    local description = 'Owner: '..player_name..' | Plate: '..plate..' | Vehicle: '..vehicle:gsub("^%l", string.upper)
+    local info = {description = description}
 
+    -- Check for OX Inventory
+    if GetResourceState('ox_inventory') == 'started' then
+        exports.ox_inventory:AddItem(src, 'rentalpapers', 1, info)
+    
+    -- Check for Codem Inventory
+    elseif GetResourceState('codem-inventory') == 'started' then
+        -- exports['codem-inventory']:AddItem(source, item, amount, slot, info)
+        exports['codem-inventory']:AddItem(src, 'rentalpapers', 1, nil, info)
+    
+    -- Fallback for standard QBCore inventory (optional)
+    elseif QBCore then
+        local Player = QBCore.Functions.GetPlayer(src)
+        -- Standard QB inventory usually handles info in the 4th argument or setup needs specific item definition
+        Player.Functions.AddItem('rentalpapers', 1, nil, info)
+        TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['rentalpapers'], "add")
+    end
 end)
 
 RegisterNetEvent('solos-rentals:server:MoneyAmounts', function(vehiclename, price, location)
@@ -55,7 +70,7 @@ RegisterNetEvent('solos-rentals:server:MoneyAmounts', function(vehiclename, pric
                 iconColor = '#C53030'
             })
             return 
-        end    
+        end     
     end
 
     if QBCore then 
