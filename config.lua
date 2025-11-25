@@ -1,59 +1,66 @@
 config = {}
 
--- target resource (only one of these can be true)
--------------------------------------------------------
-config.qbtarget = true  
-config.oxtarget = false  
--------------------------------------------------------
-
-
-config.pedmodel = 'a_m_m_prolhost_01' -- ped model hash
-
-config.scenario = 'WORLD_HUMAN_CLIPBOARD' -- scenario for ped to play, false to disable
+-- Global Settings
+config.pedmodel = 'cs_siemonyetarian' -- The ped model used for all locations (based on script logic)
+config.scenario = 'WORLD_HUMAN_CLIPBOARD' -- Scenario for the ped
+config.qbtarget = false -- Set to true if using qb-target
+config.oxtarget = true  -- Set to true if using ox_target (Based on your previous config)
 
 config.locations = {
-    ['legion'] = {
-        ped = true, -- if false uses boxzone (below)
-
-        coords = vector4(214.79, -806.52, 30.81, 337.16),
-        
-        -------- boxzone (only used if ped is false) --------
-
-        length = 1.0,  
-        width = 1.0,   
-        minZ = 30.81,  
-        maxZ = 30.81,  
-        debug = false, 
-
-        -----------------------------------------------------
+    ["Rental1"] = {
+        ped = true,
+        coords = vector4(-833.28, -2348.55, 13.57, 273.33), -- Combined vector3 and heading
+        vehiclespawncoords = vector4(-830.12, -2356.7, 14.57, 327.34),
         vehicles = {
-            ['asea']        = {     -- vehicle model name
-                price = 250,        -- ['vehicle'] = price
-                image = 'https://i.imgur.com/gpw2CNy.png',      -- image for menu, false for no image
-            },
-            ['sentinel']    = {
-                price = 500, 
-                image = 'https://i.imgur.com/LheKlzT.png',
-            },
-            ['bison']       = {
-                price = 1000, 
-                image = 'https://i.imgur.com/uOvGpSy.png',
-            },
-            ['patriot']     = {
-                price = 1500, 
-                image = 'https://i.imgur.com/LsqIPvJ.png',
-            },
-            ['stretch']     = {
-                price = 2000, 
-                image = 'https://i.imgur.com/pZeUmzV.png',
-            },
-
+            -- Format: ['spawncode'] = { price = 123, icon = 'fas fa-car' }
+            ["asea"] = { price = 500, icon = "fas fa-car" },
+            ["bison"] = { price = 500, icon = "fas fa-car" },
+            ["panto"] = { price = 200, icon = "fas fa-car" },
+            ["sanchez"] = { price = 5000, icon = "fas fa-motorcycle" },
         },
-
-        vehiclespawncoords = vector4(212.64, -797.12, 30.87, 339.09), -- where vehicle spawns when rented
-
     },
-
-    -- add as many locations as you'd like with any type of vehicle (air, water, land) follow same format as above
+    ["Rental2"] = {
+        ped = true,
+        coords = vector4(109.65, -1087.98, 28.3, 342.59),
+        vehiclespawncoords = vector4(113.95, -1075.19, 29.19, 352.89),
+        vehicles = {
+            ["asea"] = { price = 500, icon = "fas fa-car" },
+            ["bison"] = { price = 500, icon = "fas fa-car" },
+            ["panto"] = { price = 200, icon = "fas fa-car" },
+            ["sanchez"] = { price = 5000, icon = "fas fa-motorcycle" },
+        },
+    },
+    ["Rental3"] = {
+        ped = true,
+        coords = vector4(1852.14, 2588.74, 44.67, 279.66),
+        vehiclespawncoords = vector4(1876.55, 2595.67, 45.04, 269.6),
+        vehicles = {
+            ["asea"] = { price = 500, icon = "fas fa-car" },
+            ["bison"] = { price = 500, icon = "fas fa-car" },
+            ["panto"] = { price = 200, icon = "fas fa-car" },
+            ["sanchez"] = { price = 5000, icon = "fas fa-motorcycle" },
+        },
+    },
+    ["Rental4"] = {
+        ped = true,
+        coords = vector4(295.39, -602.61, 42.3, 77.65),
+        vehiclespawncoords = vector4(294.02, -606.94, 42.66, 75.73),
+        vehicles = {
+            ["asea"] = { price = 500, icon = "fas fa-car" },
+            ["bison"] = { price = 500, icon = "fas fa-car" },
+            ["panto"] = { price = 200, icon = "fas fa-car" },
+            ["sanchez"] = { price = 5000, icon = "fas fa-motorcycle" },
+        },
+    },
+    ["Rental5"] = {
+        ped = true,
+        coords = vector4(-262.24, -975.9, 30.22, 213.88),
+        vehiclespawncoords = vector4(-260.17, -995.08, 29.34, 253.57),
+        vehicles = {
+            ["asea"] = { price = 500, icon = "fas fa-car" },
+            ["bison"] = { price = 500, icon = "fas fa-car" },
+            ["panto"] = { price = 200, icon = "fas fa-car" },
+            ["sanchez"] = { price = 5000, icon = "fas fa-motorcycle" },
+        },
+    },
 }
-
